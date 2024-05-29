@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class SynchronizedMultiThreadingExample {
-    // Shared semaphore with one permit
+   //Semaphore erstellen
     private static final Semaphore semaphore = new Semaphore(1);
 
     public static void main(String[] args) {
@@ -16,26 +16,26 @@ public class SynchronizedMultiThreadingExample {
             Callable<String> task = new MyCallablee("Task " + i, i * 100);
             Future<String> future = executor.submit(() -> {
                 try {
-                    semaphore.acquire(); // Acquire the semaphore
+                    semaphore.acquire(); // semaphore erwerben
                     return task.call();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     return "";
                 } finally {
-                    semaphore.release(); // Release the semaphore in a finally block
+                    semaphore.release(); // am ende semaphreo zuruckfreigeben
                 }
             });
-            futureResults.add(future);
+            futureResults.add(future);//future objekt in der Liste einfugen
         }
 
         executor.shutdown();
 
         for (Future<String> future : futureResults) {
             try {
-                String result = future.get();
-                System.out.println(result);
+                String result = future.get();//jede objekt der futureResults list herausziehen 
+                System.out.println(result);//Output
             } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
+                e.printStackTrace();//Exceptions
             }
         }
     }

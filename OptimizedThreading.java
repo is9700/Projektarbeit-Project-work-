@@ -10,7 +10,7 @@ public class OptimizedThreading {
     public static void main(String[] args) {
 //Threadpool erstellen
         ExecutorService executor = Executors.newFixedThreadPool(5);
-    //fur jede zahl in bereich erzeugt ein CompletableFuture-Objekt(asynchron)
+    //fur jede zahl iùm bereich erzeugt ein CompletableFuture-Objekt(asynchron)
         List<CompletableFuture<MyCallable>> futures = IntStream.rangeClosed(1, 10)
                 .mapToObj(i -> CompletableFuture.supplyAsync(() -> new MyCallable("Task " + i, i * 100), executor))//mit Lambda
                 .collect(Collectors.toList());//Sammelt die CompletableFuture-Objekte in eine Liste
@@ -36,7 +36,7 @@ class MyCallable implements Callable<MyCallable> {
     }
 
     @Override
-    public MyCallable call() throws InterruptedException {
+    public MyCallable call() throws InterruptedException {//hier MyCallable Object als Ausgabe statt String
         System.out.println("Task " + taskName + " started by thread: " + Thread.currentThread().getName());
 
         TimeUnit.MILLISECONDS.sleep(computationTime);

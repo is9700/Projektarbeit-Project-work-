@@ -8,11 +8,12 @@ import java.util.stream.IntStream;
 public class OptimizedThreading {
 
     public static void main(String[] args) {
+//Threadpool erstellen
         ExecutorService executor = Executors.newFixedThreadPool(5);
-
+    //fur jede zahl in bereich erzeugt ein CompletableFuture-Objekt(asynchron)
         List<CompletableFuture<MyCallable>> futures = IntStream.rangeClosed(1, 10)
-                .mapToObj(i -> CompletableFuture.supplyAsync(() -> new MyCallable("Task " + i, i * 100), executor))
-                .collect(Collectors.toList());
+                .mapToObj(i -> CompletableFuture.supplyAsync(() -> new MyCallable("Task " + i, i * 100), executor))//mit Lambda
+                .collect(Collectors.toList());//Sammelt die CompletableFuture-Objekte in eine Liste
 
         List<String> results = futures.stream()
                 .map(CompletableFuture::join)
@@ -21,7 +22,7 @@ public class OptimizedThreading {
 
         executor.shutdown();
 
-        results.forEach(System.out::println);
+        results.forEach(System.out::println);//ausgabe
     }
 }
 
@@ -43,7 +44,7 @@ class MyCallable implements Callable<MyCallable> {
         return this;
     }
 
-    public String getResult() {
+    public String getResult() {//ausgabe 
         return "Task " + taskName + " completed by thread: " + Thread.currentThread().getName();
     }
 }

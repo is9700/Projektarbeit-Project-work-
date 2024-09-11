@@ -13,7 +13,7 @@ public class SynchronizedMultiThreadingExample {
         List<Future<String>> futureResults = new ArrayList<>();
 
         for (int i = 1; i <= 10; i++) {
-            Callable<String> task = new MyCallablee("Task " + i, i * 100);
+            Callable<String> task = new MyCallable("Task " + i, i * 100);
             Future<String> future = executor.submit(() -> {
                 try {
                     semaphore.acquire(); // semaphore erwerben
@@ -41,11 +41,11 @@ public class SynchronizedMultiThreadingExample {
     }
 }
 
-class MyCallablee implements Callable<String> {
+class MyCallable implements Callable<String> {
     private final String taskName;
     private final int computationTime;
 
-    MyCallablee(String taskName, int computationTime) {
+    MyCallable(String taskName, int computationTime) {
         this.taskName = taskName;
         this.computationTime = computationTime;
     }

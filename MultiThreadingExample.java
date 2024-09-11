@@ -12,8 +12,8 @@ public class MultiThreadingExample {
 
         // Schleife zur Erstellung und Einreichung von 10 Aufgaben
         for (int i = 1; i <= 10; i++) {
-            // Erstelle eine neue Aufgabe vom Typ MyCallableee
-            Callable<String> task = new MyCallableee("Task " + i, i * 100);
+            // Erstelle eine neue Aufgabe vom Typ MyCallable
+            Callable<String> task = new MyCallable("Task " + i, i * 100);
             
             // Übergebe die Aufgabe an den ExecutorService //erhalte ein Future-Objekt
             Future<String> future = executor.submit(task);
@@ -48,12 +48,12 @@ public class MultiThreadingExample {
     }
 }
 
-class MyCallableee implements Callable<String> {
+class MyCallable implements Callable<String> {
     private final String taskName;
     private final int computationTime;
 
     // Konstruktor 
-    MyCallableee(String taskName, int computationTime) {
+    MyCallable(String taskName, int computationTime) {
         this.taskName = taskName;
         this.computationTime = computationTime;
     }
